@@ -1,0 +1,15 @@
+{
+  "name": "rugs-multiplier-tracker",
+  "version": "1.0.0",
+  "description": "Rugs.fun Multiplier Tracker",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"node scraper.js\" \"node server.js\"",
+    "install-deps": "npm install puppeteer express concurrently"
+  },
+  "dependencies": {
+    "concurrently": "^8.2.2",
+    "express": "^4.21.2",
+    "puppeteer": "^22.15.0"
+  }
+}

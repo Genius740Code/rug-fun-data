@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rugs.fun Multiplier Tracker</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1 {
+      color: #333;
+      text-align: center;
+    }
+    #multiplierList {
+      margin-top: 20px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 10px;
+      max-height: 500px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      font-family: monospace;
+    }
+    .current-value {
+      font-size: 24px;
+      font-weight: bold;
+      text-align: center;
+      margin: 20px 0;
+      padding: 10px;
+      background-color: #f0f0f0;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Rugs.fun Multiplier Tracker</h1>
+  
+  <div class="current-value">
+    Current Multiplier: <span id="currentMultiplier">Loading...</span>
+  </div>
+  
+  <h2>History</h2>
+  <div id="multiplierList"></div>
+
+  <script>
+    // Function to fetch and display multipliers
+    async function fetchMultipliers() {
+      try {
+        const response = await fetch('/api/multipliers');
+        const multipliers = await response.json();
+        
+        // Display current multiplier
+        if (multipliers.length > 0) {
+          document.getElementById('currentMultiplier').textContent = 
+            multipliers[multipliers.length - 1].value;
+        }
+        
+        // Display history as simple comma-separated list
+        const listElement = document.getElementById('multiplierList');
+        const values = multipliers.map(item => item.value).join(', ');
+        listElement.textContent = values;
+      } catch (err) {
+        console.error('Error fetching multipliers:', err);
+      }
+    }
+    
+    // Initial load
+    fetchMultipliers();
+    
+    // Refresh every 5 seconds
+    setInterval(fetchMultipliers, 5000);
+  </script>
+</body>
+</html>
